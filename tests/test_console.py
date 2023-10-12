@@ -86,15 +86,19 @@ class TestHBNBCommand_help(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("help count"))
             self.assertEqual(h, output.getvalue().strip())
 
-    def test_help_update(self):
-        h = ("Usage: update <class> <id> <attribute_name> <attribute_value> or"
-             "\n       <class>.update(<id>, <attribute_name>, <attribute_value"
-             ">) or\n       <class>.update(<id>, <dictionary>)\n        "
-             "Update a class instance of a given id by adding or updating\n   "
-             "     a given attribute key/value pair or dictionary.")
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd("help update"))
-            self.assertEqual(h, output.getvalue().strip())
+def test_help_update(self):
+    h = (
+        "Usage: update <class> <id> <attribute_name> <attribute_value> or\n"
+        "       <class>.update(<id>, <attribute_name>, <attribute_value>) or\n"
+        "       <class>.update(<id>, <dictionary>)\n"
+        "        Update a class instance of a given id by adding or updating\n"
+        "        a given attribute key/value pair or dictionary."
+    )
+
+    with patch("sys.stdout", new=StringIO()) as output:
+        self.assertFalse(HBNBCommand().onecmd("help update"))
+        self.assertEqual(h, output.getvalue().strip())
+
 
     def test_help(self):
         h = ("Documented commands (type help <topic>):\n"
