@@ -13,22 +13,32 @@ from models.user import User
 from models.state import State
 
 
+"""split a string into a list of tokens"""
 def parse(arg):
+
+    """search for any kind of braces using regex syntax and store in a var"""
     curlybrackets = re.search(r"\{(.*?)\}", arg)
     squarebrackets = re.search(r"\[(.*?)\]", arg)
     if curlybrackets is None:
         if squarebrackets is None:
+            """strip present , then split string"""
             return [i.strip(",") for i in split(arg)]
         else:
-            lexer = split(arg[:squarebrackets.span()[0]])
-            retl = [i.strip(",") for i in lexer]
-            retl.append(squarebrackets.group())
-            return retl
+            """tokenize string that occurs before [ 
+                tokenize rest of string then append [square brackets]
+            """
+            tokenizer = split(arg[:squarebrackets.span()[0]])
+            token_list = [i.strip(",") for i in tokenizer]
+            token_list.append(squarebrackets.group())
+            return token_list
     else:
-        lexer = split(arg[:curlybrackets.span()[0]])
-        retl = [i.strip(",") for i in lexer]
-        retl.append(curlybrackets.group())
-        return retl
+        """tokenize string that occurs before {
+            tokenize rest of string then append {square brackets}
+        """
+        tokenizer = split(arg[:curlybrackets.span()[0]])
+        token_list = [i.strip(",") for i in tokenizer]
+        token_list.append(curlybrackets.group())
+        return token_list
 
 
 class HBNBCommand(cmd.Cmd):
